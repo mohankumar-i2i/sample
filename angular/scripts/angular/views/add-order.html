@@ -1,0 +1,25 @@
+<div class="row clearfix">
+				<div class="col-md-12 column">
+					<h2> Add Order </h2>
+		{{message}}
+				</div>
+				<button class="btn btn-success" ng-click="select()">Click</button>
+
+				<table>
+				<thead>
+					<tr>
+						<th>
+							name
+						</th>
+					</tr>
+				</thead>
+					<tbody>
+						<tr ng-repeat="object in objects">
+						<td>
+						{{object}}
+						</td>
+						</tr>
+					</tbody>
+
+				</table>
+</div>
