@@ -5,7 +5,7 @@ var fs = require('fs');
 var mongojs = require('mongojs');
 
 
-var db = mongojs("mohan", ["coll"]);
+var db = mongojs("TIME2DEALS", ["PRODUCT","CATEGORY"]);
 
 /**
  *  Define the sample application.
@@ -23,7 +23,7 @@ var SampleApp = function() {
     self.setupVariables = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.IPADDRESS;
-        self.port = process.env.IP_PORT || 3000;
+        self.port = process.env.IP_PORT || 3000
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on App but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
@@ -39,12 +39,12 @@ var SampleApp = function() {
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
             self.zcache = {
-                '\\angular\\index.html': ''
+                '/angular/index.html': ''
             };
         }
 
         //  Local cache for static content.
-        self.zcache['\\angular\\index.html'] = fs.readFileSync('./\\angular\\index.html');
+        self.zcache['/angular/index.html'] = fs.readFileSync('.//angular/index.html');
     };
 
 
@@ -109,7 +109,7 @@ var SampleApp = function() {
 
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('\\angular\\index.html'));
+            res.send(self.cache_get('/angular/index.html'));
         };
 
         // map incoming HTTP URL patterns to execute various functions
@@ -123,14 +123,23 @@ var SampleApp = function() {
             });
         };
 
-        self.routes['/getAll'] =  function (req, res) {
-           db.coll.find(function (err, docs) {
-            console.log(docs);
-res.json(docs);
-});
-};
+        self.routes['/service/api/getAll'] =  function (req, res) {
+           db.PRODUCT.find({dotd:false,topOffers:false}).limit(12).sort({discountPercentage:1} ,function (err, docs) {
+             res.json(docs);
+             });
+        };
 
-       
+        self.routes['/service/api/getDeals'] =  function (req, res) {
+           db.PRODUCT.find({dotd:true}).limit(12).sort(function (err, docs) {
+             res.json(docs);
+             });
+        };
+
+        self.routes['/service/api/getAllCategory'] =  function (req, res) {
+           db.CATEGORY.find(function (err, docs) {
+             res.json(docs);
+             });
+        };
 
     };
 

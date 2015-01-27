@@ -1,15 +1,15 @@
 sampleApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/AddNewOrder', {
-	templateUrl: 'scripts/angular/views/add-order.html',
+     when('/AddNewOrder', {
+	templateUrl: 'scripts/angular/views/category.html',
 	controller: 'AddOrderController'
       }).
-      when('/ShowOrders', {
-	templateUrl: 'scripts/angular/views/show_orders.html',
-	controller: 'ShowOrdersController'
+      when('/index', {
+	templateUrl: 'scripts/angular/views/index4.html',
+	controller: 'AddOrderController'
       }).
       otherwise({
-	redirectTo: '/AddNewOrder'
+	redirectTo: '/index'
       });
 }]);
